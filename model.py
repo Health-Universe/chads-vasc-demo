@@ -47,7 +47,7 @@ def chads_vasc_score(age: int, female: bool, chf: bool, hypertension: bool, stro
 
 
 template = """
-            Task: Determine if anticoagulation should be started based on the CHA2DS2-VASc score, sex, and context.
+            Task: Determine if anticoagulation is recommended based on the patient's CHA2DS2-VASc score, sex, and context.
 
             CHA2DS2-VASc Score: {score}
 
@@ -58,4 +58,4 @@ template = """
             Depending on a patient\'s preferences and individual risk factors, anticoagulation can be considered for a CHA2DS2-VASc score of 1 in males and 2 in females.
             Anticoagulation should be started in patients with a CHA2DS2-VASc score of >2 if male or >3 if female.
 
-            Note: State if anticoagulation should be started and nothing else. Only use the information from the context in constructing your interpretation. Don't add any additional information. Limit your response to one sentence."""
+            Note: State if anticoagulation is recommended and nothing else. Only use the information from the context in your determination. Don't add any additional information. Limit your response to one sentence."""

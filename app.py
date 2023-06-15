@@ -10,19 +10,26 @@ from model import chads_vasc_score, template
 import streamlit as st
 
 # Text
+## Markdown (markdown gives more flexibility than "header" or "wrote")
 st.markdown("## [CHA₂DS₂-VASc Score](https://www.mdcalc.com/calc/801/cha2ds2-vasc-score-atrial-fibrillation-stroke-risk#pearls-pitfalls) for Atrial Fibrillation Stroke Risk")
+
+## Divider (add between sections)
 st.divider()
 
-# Columns
+# Columns (if no columns use "st.")
 col1, col2 = st.columns(2)
 
 # Inputs
+## Text input (not sidebar)
 openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
 
+## Number input (can set default values)
 age = col1.number_input("Age", min_value=0, max_value=120, value=65)
 
+## Radio input (returns list value)
 sex = col2.radio("Sex", ["Male", "Female"])
 
+## Checkbox inputs (returns bool)
 chf = col1.checkbox("Congestive Heart Failure (CHF)")
 hypertension = col2.checkbox("Hypertension")
 stroke_tia = col1.checkbox("Stroke or Transient Ischemic Attack (TIA)")
@@ -38,6 +45,7 @@ score = chads_vasc_score(age=age,
                 vascular_disease=vascular_disease, 
                 diabetes=diabetes)
 
+## Info output (other options "success", "warning", "error")
 col2.info(f"CHA₂DS₂-VASc Score: {score}")
 
 st.divider()
@@ -45,7 +53,11 @@ col3, col4 = st.columns(2)
 
 # Plotting
 df = pd.read_csv(csv_path)
+
+## Dataframe
 col3.dataframe(df)
+
+## Chart
 col4.line_chart(data=df, x="CHA2DS2-VASc Score", 
                 y=["Risk of ischemic stroke", "Risk of stroke/TIA/systemic embolism"])
 
@@ -63,37 +75,67 @@ if len(openai_api_key) > 0:
     st.divider()
     col5, col6 = st.columns(2)
 
-    # LLM
+    # Large Language Models (LLMs)
+    ## Select model (note sidebar)
     model_name = st.sidebar.radio("Model", ["gpt-4", "gpt-3.5-turbo"], horizontal=True)
     st.sidebar.markdown("Note. GPT-4 is recommended for better performance.")
 
+    ## Set OpenAI API Key (get from https://platform.openai.com/account/api-keys)
     os.environ["OPENAI_API_KEY"] = openai_api_key
+
+    ## Instantiate model
     llm = ChatOpenAI(model_name=model_name, temperature=0.0)
     
-    # Prompt/Chain
-    col5.markdown("#### Is Anticoagulation Indicated?")
-    if col5.button("Run", key="prompt_chain_button"):
-        with st.spinner("Running"):
+    # Prompts and Chains
+    ## Create template
+    template = """
+            Task: Determine if anticoagulation is recommended based on the patient's CHA2DS2-VASc score, sex, and context.
 
+            CHA2DS2-VASc Score: {score}
+
+            Sex: {sex}
+
+            Context: Most guidelines suggest that scores of 0 (men) or 1 (women) do not require treatment; however, all other patients should receive anticoagulation, preferably with a direct oral anticoagulant (unless contraindicated).
+            Anticoagulation is not recommended in patients with non-valvular AF and a CHA2DS2-VASc score of 0 if male or 1 if female, as these patients had no TE events in the original study.
+            Depending on a patient\'s preferences and individual risk factors, anticoagulation can be considered for a CHA2DS2-VASc score of 1 in males and 2 in females.
+            Anticoagulation should be started in patients with a CHA2DS2-VASc score of >2 if male or >3 if female.
+
+            Note: State if anticoagulation is recommended and nothing else. Only use the information from the context in your determination. Don't add any additional information. Limit your response to one sentence."""
+    
+    col5.markdown("#### Is Anticoagulation Recommended?")
+
+    ## Button
+    if col5.button("Run", key="prompt_chain_button"):
+        ## Spinner
+        with st.spinner("Running"):
+            
+            ## Create prompt based on template
             prompt = PromptTemplate(
                 input_variables=["score", "sex"],
                 template=template,
             )
+
+            ## Load LLM and prompt to chain
             chain = LLMChain(llm=llm, prompt=prompt)
+
+            ## Run chain
             output = chain.run({"score": score, "sex": sex})
 
             col5.info(output)
 
 
-    # Tool(kits)/Agent
+    # Tools and Agents
     col6.markdown("#### What Is The Stroke Risk?")
 
     stroke_type = col6.radio("Stroke Type", ["Ischemic", "Embolic"], horizontal=True)
 
     if col6.button("Run", key="toolkit_agent_button"):
         with st.spinner("Running"):
-
+            
+            ## Create agent (this comes preloaded with CSV toolkit)
             agent = create_csv_agent(llm, csv_path, verbose=True)
+
+            ## Run agent
             output = agent.run(f"What is the risk of {stroke_type} stroke for a score of {score}")
 
             col6.info(f"{stroke_type} Risk: {output}")

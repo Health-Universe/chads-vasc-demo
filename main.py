@@ -3,7 +3,7 @@ from model import chads_vasc_score
 # Import FastAPI
 from fastapi import FastAPI
 
-# App Instance
+# Instantiate App
 app = FastAPI()
 
 # Decorate Function
