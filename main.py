@@ -7,8 +7,8 @@ from fastapi import FastAPI
 app = FastAPI()
 
 # Decorate Function
-@app.post("/")
-def run(age: int, female: bool, chf: bool, hypertension: bool, stroke_tia: bool, vascular_disease: bool, diabetes: bool) -> int:
+@app.get("/")
+def run(age: int = 65, female: bool = True, chf: bool = False, hypertension: bool = False, stroke_tia: bool = False, vascular_disease: bool = False, diabetes: bool = False) -> int:
     chads_vasc_score(age=age, 
                     female=female, 
                     chf=chf, 
