@@ -180,7 +180,7 @@ agent = create_csv_agent(llm, csv_path, verbose=True)
 
 ```python
 ## Run agent
-output = agent.run(f"What is the risk of {stroke_type} stroke for a score of {score}")
+output = agent.run(f"What is the risk of {stroke_type} stroke for a score of {score}?")
 ```
 
 For ways to create custom tools for agents see:

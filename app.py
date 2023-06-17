@@ -136,7 +136,7 @@ if len(openai_api_key) > 0:
             agent = create_csv_agent(llm, csv_path, verbose=True)
 
             ## Run agent
-            output = agent.run(f"What is the risk of {stroke_type} stroke for a score of {score}")
+            output = agent.run(f"What is the risk of {stroke_type} stroke for a score of {score}?")
 
             col6.info(f"{stroke_type} Risk: {output}")
 
