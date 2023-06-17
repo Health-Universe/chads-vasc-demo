@@ -1,6 +1,6 @@
 # CHA₂DS₂-VASc Score Demo
 
-This is a demo for deploying a [FastAPI](https://fastapi.tiangolo.com) app and [Streamlit](https://streamlit.io) app with LangChain to [Health Universe](https://www.healthuniverse.com/).
+This is a demo for deploying a [FastAPI](https://fastapi.tiangolo.com) app and [Streamlit](https://streamlit.io) app with [LangChain](https://langchain-langchain.vercel.app/docs/get_started/introduction.html) to [Health Universe](https://www.healthuniverse.com/).
 
 ## Essential Links
 
