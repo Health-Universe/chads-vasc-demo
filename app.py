@@ -10,7 +10,7 @@ from model import chads_vasc_score, template
 import streamlit as st
 
 # Text
-## Markdown (markdown gives more flexibility than "header" or "wrote")
+## Markdown (markdown gives more flexibility than "header" or "write")
 st.markdown("## [CHA₂DS₂-VASc Score](https://www.mdcalc.com/calc/801/cha2ds2-vasc-score-atrial-fibrillation-stroke-risk#pearls-pitfalls) for Atrial Fibrillation Stroke Risk")
 
 ## Divider (add between sections)

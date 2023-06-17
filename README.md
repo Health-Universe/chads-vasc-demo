@@ -60,7 +60,7 @@ To learn more about parameters and FastAPI see:
 #### 2.1. Text
 
 ```python
-## Markdown (markdown gives more flexibility than "header" or "wrote")
+## Markdown (markdown gives more flexibility than "header" or "write")
 st.markdown("## [CHA₂DS₂-VASc Score](https://www.mdcalc.com/ ...
 ```
 
