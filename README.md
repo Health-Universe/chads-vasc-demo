@@ -10,6 +10,7 @@ This is a demo for deploying a [FastAPI](https://fastapi.tiangolo.com) app and [
 - [LangChain Docs](https://python.langchain.com/en/latest/index.html)
 
 ### Further Reading
+- [Streamlit LLM Blogs](https://blog.streamlit.io/tag/llms/)
 - [OpenAI Cookbook](https://github.com/openai/openai-cookbook#prompting-guide)
 - [GPT Best Practice](https://platform.openai.com/docs/guides/gpt-best-practices)
 
@@ -132,6 +133,8 @@ if col5.button("Run", key="prompt_chain_button"):
 with st.spinner("Running"):
 ```
 
+Also, check out [Session State](https://docs.streamlit.io/library/api-reference/session-state) in Streamlit.
+
 ### 3. LangChain: `app.py`
 
 #### 3.1. Large Language Models (LLMs)
@@ -171,6 +174,8 @@ chain = LLMChain(llm=llm, prompt=prompt)
 output = chain.run({"score": score, "sex": sex})
 ```
 
+Also, check out new [Extraction](https://python.langchain.com/docs/modules/chains/additional/extraction) method in LangChain.
+
 #### 3.3. Tools and Agents
 
 ```python
@@ -185,5 +190,5 @@ output = agent.run(f"What is the risk of {stroke_type} stroke for a score of {sc
 
 For ways to create custom tools for agents see:
 
-- [Defining Custom Tools](https://python.langchain.com/en/latest/modules/agents/tools/custom_tools.html)
-- [Multi-Input Tools](https://python.langchain.com/en/latest/modules/agents/tools/multi_input_tool.html)
+- [Defining Custom Tools](https://python.langchain.com/docs/modules/agents/tools/how_to/custom_tools)
+- [Multi-Input Tools](https://python.langchain.com/docs/modules/agents/tools/how_to/multi_input_tool)
